@@ -1,0 +1,270 @@
+🔹 What Is Inheritance?
+
+Inheritance is an object-oriented programming (OOP) concept where one class (child/subclass/derived class)
+acquires the properties and behaviors (methods and variables) of another class (parent/superclass/base class).
+It’s basically code reusability + logical hierarchy in action.
+
+🔹 Why Inheritance Exists
+Without inheritance, you’d end up copying the same variables and methods across multiple classes — pure redundancy.
+Inheritance fixes that by defining common logic once and reusing it wherever needed.
+
+🔹 Core Idea
+
+If class B inherits from class A, then:
+B automatically gets A’s data members (variables) and member functions (methods).
+B can use them as-is, override them, or extend them with additional behavior.
+
+🔹 Types of Inheritance
+
+1. Single Inheritance
+One child inherits from one parent.
+A → B
+class Parent {
+    void showParent() {
+        System.out.println("I am the Parent class");
+    }
+}
+
+class Child extends Parent {
+    void showChild() {
+        System.out.println("I am the Child class");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Child obj = new Child();
+        obj.showParent();  // inherited method
+        obj.showChild();   // child’s own method
+    }
+}
+
+
+
+2. Multiple Inheritance
+One child inherits from multiple parents.
+A + B → C
+
+⚠️ Risk: Ambiguity — if both A and B have a method with the same name, the compiler won’t know which one to call.
+
+
+3. Multilevel Inheritance
+Inheritance across multiple levels.
+A → B → C
+
+class GrandParent {
+    void message() {
+        System.out.println("I am the GrandParent");
+    }
+}
+
+class Parent extends GrandParent {
+    void showParent() {
+        System.out.println("I am the Parent");
+    }
+}
+
+class Child extends Parent {
+    void showChild() {
+        System.out.println("I am the Child");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Child obj = new Child();
+        obj.message();     // from GrandParent
+        obj.showParent();  // from Parent
+        obj.showChild();   // from Child
+    }
+}
+
+
+
+4. Hierarchical Inheritance
+Multiple classes inherit from the same parent.
+A → (B, C, D)
+
+class Animal {
+    void eat() {
+        System.out.println("Animal is eating");
+    }
+}
+
+class Dog extends Animal {
+    void bark() {
+        System.out.println("Dog is barking");
+    }
+}
+
+class Cat extends Animal {
+    void meow() {
+        System.out.println("Cat is meowing");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog d = new Dog();
+        d.eat();
+        d.bark();
+
+        Cat c = new Cat();
+        c.eat();
+        c.meow();
+    }
+}
+
+
+4. Method Overriding (Runtime Polymorphism)
+class Animal {
+    void sound() {
+        System.out.println("Generic animal sound");
+    }
+}
+
+class Dog extends Animal {
+    @Override
+    void sound() {
+        System.out.println("Dog barks");
+    }
+}
+
+class Cat extends Animal {
+    @Override
+    void sound() {
+        System.out.println("Cat meows");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal a1 = new Dog();  // parent reference → child object
+        Animal a2 = new Cat();
+
+        a1.sound(); // Dog barks
+        a2.sound(); // Cat meows
+    }
+}
+
+
+Here Java decides at runtime which version of sound() to call — that’s runtime polymorphism.
+
+🔹 5. Using super Keyword
+
+super allows the child class to call:
+
+Parent’s methods
+
+Parent’s constructor
+
+Parent’s variables (if hidden)
+
+class Parent {
+    int value = 10;
+
+    Parent() {
+        System.out.println("Parent constructor called");
+    }
+
+    void display() {
+        System.out.println("Display from Parent");
+    }
+}
+
+class Child extends Parent {
+    int value = 20;
+
+    Child() {
+        super(); // calls Parent constructor
+        System.out.println("Child constructor called");
+    }
+
+    void display() {
+        super.display(); // calls Parent's method
+        System.out.println("Display from Child");
+        System.out.println("Parent value = " + super.value);
+        System.out.println("Child value = " + this.value);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Child obj = new Child();
+        obj.display();
+    }
+}
+
+
+5. Hybrid Inheritance
+Combination of multiple inheritance types — e.g., multiple + multilevel.
+⚠️ Can lead to Diamond Problem.
+
+
+🔹 Access Specifiers in Inheritance
+
+How a base class’s members are inherited depends on the access type:
+Inheritance Type	Public Members of Base	Protected Members of Base	Private Members of Base
+public	Public in derived	Protected in derived	Not inherited
+protected	Protected in derived	Protected in derived	Not inherited
+private	Private in derived	Private in derived	Not inherited
+So, public inheritance = “is-a” relationship
+(e.g., Dog is a Animal)
+
+
+🔹 Inheritance vs Composition (Important Distinction)
+Concept	Meaning	Example	When to Use
+Inheritance (is-a)	Child is a specialized version of parent	Car is a Vehicle	For shared core behavior
+Composition (has-a)	Class has another class as part of it	Car has an Engine	For modular or replaceable behavior
+Overusing inheritance leads to rigid design; composition gives flexibility.
+
+🔹 Pros & Cons
+
+✅ Advantages
+
+Code reusability
+
+Logical hierarchy
+
+Easier maintenance
+
+Supports polymorphism
+
+❌ Disadvantages
+
+Tightly coupled classes
+
+Complex debugging (especially with multiple inheritance)
+
+Harder to modify base without breaking derived classes
+
+
+why are parent class properties are initilized first?
+Parent class properties are initialized first because the child object is built on top of the parent object.
+The parent part must exist and be ready before the child can extend or modify it.
+When you create a Child object, you’re not only creating a Child;
+you’re creating a Parent + Child combined.
+
+🔹 What Happens If You Try to Call Parent Later?
+You can’t. Java will throw a compile-time error if you try to call super() anywhere other than the first statement in the child’s constructor.
+Because by that time, the child’s own fields may depend on the parent’s initialization — which must already be complete.
+
+
+parent referencing to the child object?
+🔹 The Concept
+
+When you write:
+
+Parent p = new Child();
+You are referencing a Child object using a Parent type reference.
+The object is created in heap memory → of type Child.
+The reference (variable p) is of type Parent.
+This is perfectly legal because a Child is-a Parent (inheritance relationship).
+
+🔹 What’s Actually Happening (Mechanically)
+When you call a method on a parent reference:
+The compiler checks if the method exists in the parent type.
+The JVM looks up the object’s actual class to find the most overridden version.
+It executes that version via a vtable (virtual method table) lookup.
+That’s dynamic binding — the foundation of polymorphism in Java.
+
