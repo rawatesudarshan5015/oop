@@ -1,0 +1,96 @@
+🔹 1. What is Encapsulation?
+Encapsulation means wrapping data (variables) and behavior (methods) together into a single unit and
+ restricting direct access to the internal data of that unit.
+
+In Java terms:
+It’s achieved by declaring variables as private and providing public getter and setter methods to
+control how that data is accessed or modified.
+You can think of encapsulation as putting the “sensitive data” of your class inside a protective
+capsule — so external code can’t tamper with it directly.
+
+
+🔹 2. Real-World Analogy (in your project)
+
+In your Hospital Management System, consider a Patient class.
+
+A patient’s medical record, contact number, or diagnosis is sensitive information.
+You don’t want other parts of your program (like the receptionist module) to modify that data freely.
+
+So you encapsulate that data inside the class.
+
+🔹 3. Example: Encapsulation in the Hospital Management System
+class Patient {
+    // Private data members (hidden from outside)
+    private String name;
+    private int age;
+    private String diagnosis;
+
+    // Constructor
+    public Patient(String name, int age, String diagnosis) {
+        this.name = name;
+        this.age = age;
+        this.diagnosis = diagnosis;
+    }
+
+    // Public getter and setter methods (controlled access)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        // Validation logic before changing data
+        if (name != null && !name.trim().isEmpty()) {
+            this.name = name;
+        } else {
+            System.out.println("Invalid patient name.");
+        }
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        // Protect invalid updates
+        if (age > 0 && age < 120) {
+            this.age = age;
+        } else {
+            System.out.println("Invalid age entered.");
+        }
+    }
+
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        // Access control logic can be added here
+        this.diagnosis = diagnosis;
+    }
+}
+
+
+And in your main hospital code:
+
+public class HospitalMain {
+    public static void main(String[] args) {
+        Patient p1 = new Patient("Riya", 28, "Flu");
+
+        System.out.println("Patient Name: " + p1.getName());
+        System.out.println("Diagnosis: " + p1.getDiagnosis());
+
+        p1.setAge(130); // Invalid -> triggers validation
+        p1.setAge(30);  // Valid
+        System.out.println("Updated Age: " + p1.getAge());
+    }
+}
+
+
+Output:
+
+Patient Name: Riya
+Diagnosis: Flu
+Invalid age entered.
+Updated Age: 30
+
+
