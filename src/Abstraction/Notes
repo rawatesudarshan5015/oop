@@ -1,0 +1,130 @@
+🔹 1. What is Abstraction?
+
+Abstraction means showing only the essential features of an object while hiding its internal implementation details.
+
+You care about what an object does, not how it does it.
+
+In simple terms:
+
+You interact with an interface, not the inner code.
+
+🔸 Real-world analogy (Hospital example)
+
+When you, as a hospital admin, click a button to “Add Patient” —
+you don’t need to know how the backend code stores data in the database.
+You just need to know that “Add Patient” successfully registers the patient.
+
+That’s abstraction — hiding the complex logic behind a simple interface.
+
+🔹 2. Abstraction in Java
+
+Java provides two main ways to achieve abstraction:
+
+Abstract Classes
+
+Interfaces
+
+Both allow you to define a blueprint — a structure that other classes must follow —
+but without exposing implementation details.
+
+
+🔹 3. Abstract Class Example (From Your Hospital Management System)
+
+Let’s say you have different kinds of staff: Doctor, Nurse, Receptionist.
+They all share some common structure, but their work differs.
+
+You can define an abstract class Staff like this:
+
+abstract class Staff {
+    private String name;
+    private int id;
+
+    public Staff(String name, int id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    // Concrete method (shared logic)
+    public void showDetails() {
+        System.out.println("Staff ID: " + id + ", Name: " + name);
+    }
+
+    // Abstract method (must be implemented by subclasses)
+    abstract void performDuties();
+}
+
+
+Now, subclasses must implement their own version of performDuties():
+
+class Doctor extends Staff {
+    public Doctor(String name, int id) {
+        super(name, id);
+    }
+
+    @Override
+    void performDuties() {
+        System.out.println("Doctor: Treats patients and prescribes medication.");
+    }
+}
+
+class Nurse extends Staff {
+    public Nurse(String name, int id) {
+        super(name, id);
+    }
+
+    @Override
+    void performDuties() {
+        System.out.println("Nurse: Assists doctors and monitors patients.");
+    }
+}
+
+class Receptionist extends Staff {
+    public Receptionist(String name, int id) {
+        super(name, id);
+    }
+
+    @Override
+    void performDuties() {
+        System.out.println("Receptionist: Manages appointments and patient records.");
+    }
+}
+
+
+Usage:
+
+public class HospitalSystem {
+    public static void main(String[] args) {
+        Staff s1 = new Doctor("Riya", 101);
+        Staff s2 = new Nurse("Anjali", 102);
+        Staff s3 = new Receptionist("Karan", 103);
+
+        s1.showDetails();
+        s1.performDuties();
+
+        s2.showDetails();
+        s2.performDuties();
+
+        s3.showDetails();
+        s3.performDuties();
+    }
+}
+
+
+Output:
+
+Staff ID: 101, Name: Riya
+Doctor: Treats patients and prescribes medication.
+Staff ID: 102, Name: Anjali
+Nurse: Assists doctors and monitors patients.
+Staff ID: 103, Name: Karan
+Receptionist: Manages appointments and patient records.
+
+🔹 Explanation
+
+Staff defines what every staff must do (the performDuties() method).
+
+It doesn’t define how they do it — that’s decided by each subclass.
+
+This gives you a common interface + flexibility for specialization.
+
+That’s abstraction — you’re focusing only on “what actions exist,” not “how they’re done.”
