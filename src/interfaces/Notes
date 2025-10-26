@@ -1,0 +1,44 @@
+🔹 What is an Interface?
+
+An interface in Java is a blueprint of a class.
+It defines what must be done, but not how it should be done.
+You can think of it as a contract — if a class implements an interface, it promises
+to provide concrete implementations for all its abstract methods.
+
+💡 Real-world analogy
+In a hospital, think of an interface as a doctor’s duty chart:
+Every doctor must be able to treat patients.
+Every doctor must be able to write prescriptions.
+But how they treat or prescribe (their specialization, style, etc.) depends on the individual doctor.
+So the interface defines the rules, and classes define the behavior.
+
+
+🔹 Rules of Interfaces (You Must Know This)
+All methods are abstract by default (until Java 8).
+→ They only have method signatures, no body.
+Fields are public, static, and final by default.
+→ You can’t change them.
+A class can implement multiple interfaces (supports multiple inheritance).
+An interface can extend another interface but not a class.
+Since Java 8:
+You can have default methods (methods with body).
+You can have static methods in interfaces.
+
+🔹 Why use Interfaces?
+Because they:
+Enforce common behavior across different classes.
+Allow multiple inheritance of type (something classes can’t do).
+Support loose coupling — your system depends on what is done, not who does it.
+Enable scalability and testability — you can swap implementations without breaking the system.
+
+🔹 Example from Your Hospital Management System
+Let’s say you have multiple modules that handle appointments — one for online booking, one for walk-in patients.
+You don’t want your main code to depend on which one is being used.
+So, you define a common interface.
+
+🔹 When to Use Interface in Your Hospital Management System
+    Use Case	                            Why Interface Helps
+AppointmentService	            Switch between online, walk-in, or teleconsultation systems easily
+PaymentGateway	                Support Razorpay, Stripe, or Paytm without changing main code
+NotificationService	            Send SMS, Email, or Push notifications interchangeably
+UserAuthentication	            Allow multiple login mechanisms (email, Google, hospital ID)
