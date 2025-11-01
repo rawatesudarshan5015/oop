@@ -1,0 +1,60 @@
+🔹 What Are Generics?
+
+Generics in Java let you write classes, interfaces, and methods that can operate on any data type — but still maintain compile-time type safety.
+
+In simple terms:
+
+Generics allow you to write reusable and type-safe code without duplicating logic for each data type.
+
+💡 Example without Generics (Old-School Java)
+import java.util.ArrayList;
+
+public class OldListExample {
+    public static void main(String[] args) {
+        ArrayList list = new ArrayList(); // No generics
+
+        list.add("Sudarshan");
+        list.add(10); // Allowed — no type safety
+
+        for (Object item : list) {
+            String name = (String) item; // Needs casting
+            System.out.println(name);
+        }
+    }
+}
+
+❌ Problems:
+
+You can add any type → String, Integer, whatever — no safety.
+
+You must cast manually, which can cause runtime errors like:
+
+Exception in thread "main" java.lang.ClassCastException: Integer cannot be cast to String
+
+✅ Using Generics (Modern Java)
+import java.util.ArrayList;
+
+public class GenericListExample {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>(); // Generic type
+
+        list.add("Sudarshan");
+        list.add("Neha");
+        // list.add(10);  ❌ Compile-time error
+
+        for (String name : list) { // No casting
+            System.out.println(name);
+        }
+    }
+}
+
+
+Result:
+Type safety + cleaner code + fewer runtime crashes.
+
+🔹 Why Use Generics?
+Reason	Explanation
+Type Safety	You can only add the correct type (e.g., String in ArrayList<String>)
+No Casting Needed	Type is known at compile time
+Code Reusability	Same class/method works for multiple data types
+Cleaner Code	Easier to read and maintain
